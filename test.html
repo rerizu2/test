@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>王寺工業高校 1年A組 情報電子工学科ページ</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: "Arial", sans-serif;
+      min-height: 100vh;
+    }
+
+    body {
+      background: linear-gradient(to bottom right, #ff6b6b, #ffa502);
+    }
+
+    .password-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #333;
+      color: white;
+    }
+
+    .password-screen input,
+    .password-screen button {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    .main-content {
+      display: none;
+      width: 100%;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(90deg, #ff6b6b, #ffa502);
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    nav ul li {
+      flex: 1;
+      text-align: center;
+      max-width: 30%;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .hero {
+      background: url('hero-image.jpg') no-repeat center/cover;
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5em;
+      font-weight: bold;
+      color: white;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    }
+
+    .page-content {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 30px 20px;
+      margin: 20px auto;
+      max-width: 1000px;
+      border-radius: 15px;
+      text-align: center;
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+    }
+
+    iframe {
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- パスワード画面 -->
+<div class="password-screen" id="password-screen">
+  <h1>パスワードを入力してください</h1>
+  <input type="password" id="password-input" placeholder="パスワード">
+  <button onclick="checkPassword()">送信</button>
+</div>
+
+<!-- 本編画面 -->
+<div class="main-content" id="main-content">
+  <header>
+    <div class="logo">1年 I科 A組</div>
+    <nav>
+      <ul>
+        <li><a onclick="showPage('home')">ホームページ</a></li>
+        <li><a onclick="showPage('schedule')">時間割</a></li>
+        <li><a onclick="showPage('calendar')">カレンダー</a></li>
+        <li><a onclick="showPage('test')">期末テスト範囲</a></li>
+        <li><a onclick="showPage('haihubutu')">配布物プリント</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    ようこそ<br>1IAページへ
+  </section>
+
+  <section class="page-content" id="page-content">
+    <h1>このページについて</h1>
+    <p>
+      こちらのページは1IAの皆様のみ入れるページとなっております。<br>
+      なお、こちらのページは、GoogleChatで一政が発信した<br>
+      時間割、カレンダー、配布プリントなどがわかりやすい状態で掲示しております。<br>
+      また、追加していただきたいことがございましたら一政までお伝えいただくようよろしくお願いいたします。
+    </p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 王寺工業高等学校 1年A組 I科</p>
+  </footer>
+</div>
+
+<script>
+  const correctPassword = "0h4MO";
+
+  function checkPassword() {
+    const input = document.getElementById("password-input").value;
+    if (input === correctPassword) {
+      document.getElementById("password-screen").style.display = "none";
+      document.getElementById("main-content").style.display = "block";
+    } else {
+      alert("パスワードが違います！");
+    }
+  }
+
+  function getResponsiveWidth() {
+    const w = window.innerWidth;
+    if (w > 1000) return 1000;       // PC
+    if (w > 600) return 600;         // タブレット or 横画面スマホ
+    return 300;                      // スマホ縦画面
+  }
+
+  function showPage(page) {
+    const content = document.getElementById("page-content");
+    if (page === 'home') {
+      content.innerHTML = `
+        <h1>このページについて</h1>
+        <p>
+          こちらのページは1IAの皆様のみ入れるページとなっております。<br>
+          なお、こちらのページは、GoogleChatで一政が発信した<br>
+          時間割、カレンダー、配布プリントなどがわかりやすい状態で掲示しております。<br>
+          また、追加していただきたいことがございましたら一政までお伝えいただくようよろしくお願いいたします。
+        </p>
+      `;
+    } else if (page === 'schedule') {
+      const width = getResponsiveWidth();
+      content.innerHTML = `
+        <h1>時間割</h1>
+        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ0try5rh29bXvIfaEkguZxKXkh4qunWPHoAbNkZOreHdqWw_nLAQjdhCZ90JxvPlEfPdnSZ39hcfSy/pubhtml?widget=true&amp;headers=false" width="${width}" height="300"></iframe>
+      `;
+    } else if (page === 'calendar') {
+      const width = getResponsiveWidth();
+      content.innerHTML = `
+        <h1>カレンダー</h1>
+        <iframe src="https://calendar.google.com/calendar/embed?src=youmuyizheng%40gmail.com&ctz=Asia%2FTokyo" width="${width}" height="400" frameborder="0" scrolling="no"></iframe>
+      `;
+    } else if (page === 'test') {
+      content.innerHTML = `
+      <h1>期末テスト範囲</h1>
+      <p>現在はございません</p>
+      `;
+    } else if (page === 'haihubutu') {
+      content.innerHTML = `
+        <h1>配布プリント</h1>
+        <details open="open">
+          <summary>6月</summary>
+          <details>
+            <summary>6月 Error! 日</summary>
+            　　<ul>
+                  <li><p>無題の写真404</p></li>
+                  <li><img src="https://chat.google.com/u/0/api/get_attachment_url?url_type=FIFE_URL&content_type=image%2Fjpeg&attachment_token=AOo0EEWYUgSHRif0MSOPxW1ksTYoYk7YQLOg6r8TwsOs6%2FJVCJZ6hs28qPKAKCQW6LQU1fNU%2BQn9e7Cz8Av1kF8nFLmy8tKG1Fk16ENSs578Aj3dSRZddXqRvWu5tGsIM4eLpmDdeE2sYc9bJnrYz9VtJ%2BSCxeYf6jw8sWh6FRIrhIIBxYib3yT7LpkTuKh2UT4aXAaZWD4r4bKlqrCH22DIYy8r%2BueATvBU494Jrla4qP7jPvDkKK09n2gAIal47gOVqqG3whRHzjWu5BVT3Fubeq%2BteB4LjQGy2FZxYASOGl6AvR7abigvhU7Cs0DzlihSS8SnCjJoy%2FyvBXyVgWUqXBmc2Lvsgu4hFWmtnmANaCTPy3Cw04F6e6GIM0usLCU9aW8yhHgZyl4ksPZ3oSMZTt%2FgnhXBM7eo8pbyiWXvD2mLw72WylszXHCJ9zr3xNeANNATsxRAPB86zNjC2zpi8Vivyka%2FWdxLy0q%2B9Xo1f9WFXHZuXirED%2FJhDWIBF3LS7230CCzxAbmnKvGt88f383%2Btic2xxaaRUKNSrEv%2FaxtvSG5Si2D4baqUSLG6EIsCRMhD8ATAwBxaaQ61srLSJm3UOa9cYUINuvME06cnWrVxz7i3Gq6I0zWGMih5CgM0p3w4q1jk9x1EMJT4zRk%3D&allow_caching=true&sz=w1920-h1200" alt="例の画像" width="450"></li>
+               </ul>
+          </details>
+        </details>
+      `;
+    }
+  }
+
+  // 初回ロード時に画面サイズに合わせて初期表示内容の幅を調整（オプション）
+  window.addEventListener("resize", () => {
+    const pageContent = document.getElementById("page-content");
+    if (pageContent.innerHTML.includes("<iframe")) {
+      const currentPage = pageContent.querySelector("h1")?.textContent || "";
+      if (currentPage === "時間割") showPage("schedule");
+      if (currentPage === "カレンダー") showPage("calendar");
+    }
+  });
+</script>
+
+</body>
+</html>
