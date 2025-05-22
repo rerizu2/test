@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>王寺工業高校 1年A組 情報電子工学科ページ</title>
   <style>
     html, body {
@@ -44,6 +44,21 @@
       color: white;
       padding: 20px 0;
       text-align: center;
+      position: relative;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .menu-toggle {
+      display: none;
+      background-color: #ff6b6b;
+      color: white;
+      padding: 10px;
+      font-size: 20px;
+      cursor: pointer;
     }
 
     nav ul {
@@ -99,6 +114,33 @@
 
     iframe {
       border: none;
+      max-width: 100%;
+      display: block;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      nav ul {
+        display: none;
+        flex-direction: column;
+        background-color: #ff6b6b;
+        margin-top: 10px;
+        width: 100%;
+      }
+
+      nav ul.show {
+        display: flex;
+      }
+
+      nav ul li {
+        max-width: 100%;
+        border-top: 1px solid #fff;
+        padding: 10px 0;
+      }
     }
   </style>
 </head>
@@ -107,7 +149,7 @@
 <!-- パスワード画面 -->
 <div class="password-screen" id="password-screen">
   <h1>パスワードを入力してください</h1>
-  <input type="password" id="password-input" placeholder="パスワード">
+  <input type="password" id="password-input" placeholder="パスワード" />
   <button onclick="checkPassword()">送信</button>
 </div>
 
@@ -115,10 +157,12 @@
 <div class="main-content" id="main-content">
   <header>
     <div class="logo">1年 I科 A組</div>
+    <div class="menu-toggle" onclick="toggleMenu()">☰ メニュー</div>
     <nav>
-      <ul>
+      <ul id="nav-list">
         <li><a onclick="showPage('home')">ホームページ</a></li>
         <li><a onclick="showPage('schedule')">時間割</a></li>
+        <li><a onclick="showPage('syukketu')">今回の出欠</a></li>
         <li><a onclick="showPage('calendar')">カレンダー</a></li>
         <li><a onclick="showPage('test')">期末テスト範囲</a></li>
         <li><a onclick="showPage('haihubutu')">配布物プリント</a></li>
@@ -133,11 +177,12 @@
   <section class="page-content" id="page-content">
     <h1>このページについて</h1>
     <p>
-      こちらのページは1IAの皆様のみ入れるページとなっております。<br>
-      なお、こちらのページは、GoogleChatで一政が発信した<br>
+      こちらのページは1IAの皆様、1AIの生徒の保護者の方のみ入れるページとなっております。<br>
+      なお、生徒の皆様は、GoogleChatで一政が発信した<br>
       時間割、カレンダー、配布プリントなどがわかりやすい状態で掲示しております。<br>
-      また、追加していただきたいことがございましたら一政までお伝えいただくようよろしくお願いいたします。
+      また、追加していただきたいことがございましたら一政までお伝えいただくよう、よろしくお願いいたします。
     </p>
+    <h1>1AIの保護者の方へ</h1>
   </section>
 
   <footer>
@@ -160,13 +205,15 @@
 
   function getResponsiveWidth() {
     const w = window.innerWidth;
-    if (w > 1000) return 1000;       // PC
-    if (w > 600) return 600;         // タブレット or 横画面スマホ
-    return 300;                      // スマホ縦画面
+    if (w > 1000) return 1000;
+    if (w > 600) return 600;
+    return 300;
   }
 
   function showPage(page) {
     const content = document.getElementById("page-content");
+    const width = getResponsiveWidth();
+
     if (page === 'home') {
       content.innerHTML = `
         <h1>このページについて</h1>
@@ -178,47 +225,51 @@
         </p>
       `;
     } else if (page === 'schedule') {
-      const width = getResponsiveWidth();
       content.innerHTML = `
         <h1>時間割</h1>
         <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ0try5rh29bXvIfaEkguZxKXkh4qunWPHoAbNkZOreHdqWw_nLAQjdhCZ90JxvPlEfPdnSZ39hcfSy/pubhtml?widget=true&amp;headers=false" width="${width}" height="300"></iframe>
       `;
+    } else if (page === 'syukketu') {
+      content.innerHTML = `
+        <h1>今日の出欠表</h1>
+        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQLfUfBifh13ECoTeOq9kYkYvpq_PgUUfjB8BVR6L51SRkiFN3GwkPPO3jNzR4YI99adeDrwqdOmlve/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false" width="${width}" height="1100"></iframe>
+      `;
     } else if (page === 'calendar') {
-      const width = getResponsiveWidth();
       content.innerHTML = `
         <h1>カレンダー</h1>
         <iframe src="https://calendar.google.com/calendar/embed?src=youmuyizheng%40gmail.com&ctz=Asia%2FTokyo" width="${width}" height="400" frameborder="0" scrolling="no"></iframe>
       `;
     } else if (page === 'test') {
       content.innerHTML = `
-      <h1>期末テスト範囲</h1>
-      <p>現在はございません</p>
+        <h1>期末テスト範囲</h1>
+        <p>現在はございません</p>
       `;
     } else if (page === 'haihubutu') {
-      const width = getResponsiveWidth();
       content.innerHTML = `
         <h1>配布プリント</h1>
         <details open="open">
-          <summary>6月</summary>
+          <summary>5月</summary>
           <details>
-            <summary>6月 Error! 日</summary>
-            　　<ul>
-                  <li><p>無題の写真404</p></li>
-                  <li><img src="5月の予定表.png" alt="例の画像" width="300">
-                      <img src="test.png" alt="例の画像1" width="300"></li>
-               </ul>
+            <summary>5月 Error! 日</summary>
+            <ul>
+              <li><p>無題の写真404</p></li>
+            </ul>
           </details>
         </details>
       `;
     }
   }
 
-  // 初回ロード時に画面サイズに合わせて初期表示内容の幅を調整（オプション）
+  function toggleMenu() {
+    document.getElementById("nav-list").classList.toggle("show");
+  }
+
   window.addEventListener("resize", () => {
     const pageContent = document.getElementById("page-content");
     if (pageContent.innerHTML.includes("<iframe")) {
       const currentPage = pageContent.querySelector("h1")?.textContent || "";
       if (currentPage === "時間割") showPage("schedule");
+      if (currentPage === "今日の出欠表") showPage("syukketu");
       if (currentPage === "カレンダー") showPage("calendar");
     }
   });
